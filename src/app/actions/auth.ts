@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { isEmailInvited } from '@/lib/invites'
 import { rateLimit, clientIpFrom } from '@/lib/rate-limit'
-import { signInSchema, signUpSchema, emailSchema } from '@/lib/validation'
+import { signInSchema, signUpSchema } from '@/lib/validation'
 import type { AuthActionState } from '@/lib/action-state'
 
 const erroGenerico =
@@ -92,50 +92,17 @@ export async function signUpAction(
     }
     return { error: erroGenerico }
   }
+
+  // Com "Confirmar e-mail" desligado no Supabase, o cadastro já vem com
+  // sessão: loga direto. Se em algum momento a confirmação voltar a ser
+  // exigida, a template de e-mail usa o gate do /auth/confirm.
   if (data.session) {
-    // e-mail autoconfirmado (comum em ambiente dev) → já está logado; o
-    // trigger do banco garante que o perfil saiu da lista de convites.
     redirect('/hoje')
   }
 
   return {
-    message: 'Conta criada! Confira seu e-mail para confirmar o acesso.',
+    message: 'Conta criada! Confira seu e-mail para ativar o acesso.',
   }
-}
-
-export async function magicLinkAction(
-  _prev: AuthActionState,
-  formData: FormData,
-): Promise<AuthActionState> {
-  const parsed = emailSchema.safeParse(formData.get('email'))
-  if (!parsed.success) {
-    return { error: parsed.error.issues[0]!.message }
-  }
-
-  const rl = rateLimit(
-    `magic:${clientIpFrom(await headers())}`,
-    5,
-    10 * 60_000,
-  )
-  if (!rl.ok) {
-    return {
-      error: `Muitos pedidos de link. Tente novamente em ${Math.ceil(rl.retryAfterSec / 60)} min.`,
-    }
-  }
-
-  if (!(await isEmailInvited(parsed.data))) {
-    return { error: 'Este e-mail não está na lista de convites do OurDevo.' }
-  }
-
-  const supabase = await createClient()
-  const { error } = await supabase.auth.signInWithOtp({
-    email: parsed.data,
-    options: { emailRedirectTo: origin() + '/auth/confirm' },
-  })
-  if (error) {
-    return { error: erroGenerico }
-  }
-  return { message: 'Enviado! Abra o link no seu e-mail para entrar.' }
 }
 
 export async function signOutAction(): Promise<void> {

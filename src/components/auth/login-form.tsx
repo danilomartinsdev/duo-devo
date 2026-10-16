@@ -1,14 +1,10 @@
 'use client'
 
 import { useActionState, useState } from 'react'
-import {
-  magicLinkAction,
-  signInAction,
-  signUpAction,
-} from '@/app/actions/auth'
+import { signInAction, signUpAction } from '@/app/actions/auth'
 import type { AuthActionState } from '@/lib/action-state'
 
-type Modo = 'entrar' | 'magic' | 'primeiro'
+type Modo = 'entrar' | 'primeiro'
 
 const initialState: AuthActionState = {}
 
@@ -17,7 +13,6 @@ export function LoginForm() {
 
   return (
     <div>
-      {/* modo: entrar por senha, link mágico ou primeiro acesso */}
       <div
         role="tablist"
         aria-label="Como entrar"
@@ -26,17 +21,12 @@ export function LoginForm() {
         <TabButton ativo={modo === 'entrar'} onClick={() => setModo('entrar')}>
           Entrar
         </TabButton>
-        <TabButton ativo={modo === 'magic'} onClick={() => setModo('magic')}>
-          Por link mágico
-        </TabButton>
         <TabButton ativo={modo === 'primeiro'} onClick={() => setModo('primeiro')}>
           1º acesso
         </TabButton>
       </div>
 
-      {modo === 'entrar' && <FormaEntrar />}
-      {modo === 'magic' && <FormaMagica />}
-      {modo === 'primeiro' && <FormaPrimeira />}
+      {modo === 'entrar' ? <FormaEntrar /> : <FormaPrimeira />}
     </div>
   )
 }
@@ -49,20 +39,6 @@ function FormaEntrar() {
       <Campo label="Senha" name="password" type="password" autoComplete="current-password" />
       <Mensagens state={state} />
       <Botao pending={pending}>Entrar</Botao>
-    </form>
-  )
-}
-
-function FormaMagica() {
-  const [state, action, pending] = useActionState(magicLinkAction, initialState)
-  return (
-    <form action={action} className="flex flex-col gap-4">
-      <Campo label="E-mail" name="email" type="email" autoComplete="username" />
-      <Mensagens state={state} />
-      <Botao pending={pending}>Enviar link por e-mail</Botao>
-      <p className="text-center text-xs text-ink-soft">
-        O link chega por e-mail e vale por uma senha só.
-      </p>
     </form>
   )
 }

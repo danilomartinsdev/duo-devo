@@ -22,15 +22,14 @@ compartilhado, pedidos de oração e um jardim que só cresce quando as duas lee
 
 1. **Banco de dados** — crie o projeto no [Supabase](https://supabase.com) (região `South America` para latência), depois abra o **SQL Editor** e rode na íntegra, **em ordem**: `supabase/01_schema.sql` e `supabase/02_leitura.sql`. Antes de rodar, edite o bloco `insert into public.allowed_users` com os e-mails dos dois convidados.
 2. **Variáveis de ambiente** — `cp .env.example .env.local` e preencha com os valores de *Settings → API* no painel do Supabase. A `service_role` fica **apenas** neste arquivo: nunca vá para o git nem para o cliente.
-3. **Template de e-mail** — no painel: *Authentication → Emails*. Nas templates **Magic Link** e **Confirm Signup**, troque `{{ .ConfirmationURL }}` por `{{ .TokenHash }}` e o link por `<URL_DO_APP>/auth/confirm?token_hash={{ .TokenHash }}&type=…` (ex.: `…/auth/confirm?token_hash={{ .TokenHash }}&type=magiclink`).
+3. **Login** — o OurDevo usa **e-mail + senha**, sem e-mail de confirmação. No painel: *Authentication → Sign In / Providers → Email* → **desligue o toggle "Confirm email"**. Assim o cadastro em "1º acesso" já loga direto — o trigger do banco cria o perfil e valida que o e-mail está na lista de convites. A rota `/auth/confirm` fica como rede de segurança, fora do fluxo normal.
 4. **URLs de auth** — *Authentication → URL Configuration*: Site URL = `http://localhost:3000` (e a URL da Vercel depois); Redirect URLs: adicione `<URL>/auth/confirm`.
 5. Rodar: `npm run dev` → `http://localhost:3000`.
 
 ## Criar as contas e a dupla
 
-1. Em `/login`, aba **1º acesso**: cada uma cria a conta (e-mail + senha, ou volta à aba *Entrar* e usa o link mágico).
-2. Confirma o e-mail pelo link recebido — ele passa pelo gate `/auth/confirm`, que valida novamente a lista de convites.
-3. Com os dois cadastros confirmados, rode no SQL Editor o bloco comentado **"Criar a dupla"** no fim de `01_schema.sql` (uma única vez).
+1. Em `/login`, aba **1º acesso**: cada uma cria a conta (nome + e-mail + senha) e já entra direto.
+2. Com os dois cadastros feitos, rode no SQL Editor o bloco comentado **"Criar a dupla"** no fim de `01_schema.sql` (uma única vez).
 
 ## Deploy na Vercel
 
@@ -46,8 +45,8 @@ compartilhado, pedidos de oração e um jardim que só cresce quando as duas lee
 ## Segurança já implementada
 
 - RLS habilitada em **todas** as tabelas; `allowed_users` sem nenhuma política (nem anon, nem authenticated leem).
-- Trava de convite em **duas camadas**: verificação na server action antes do signup/link e trigger `handle_new_user` no banco + gate na rota `/auth/confirm`.
-- Rate limit nas actions de login/cadastro/link mágico (5–8 tentativas / 10 min por IP).
+- Trava de convite em **duas camadas**: verificação na server action antes do signup e trigger `handle_new_user` no banco (+ gate na rota `/auth/confirm`).
+- Rate limit nas actions de login/cadastro (5–8 tentativas / 10 min por IP).
 - Zod validando toda entrada; service role apenas no servidor.
 - Headers de segurança (CSP, HSTS, frame-ancestors none, etc.) em `next.config.ts`; `poweredByHeader` desabilitado.
 
