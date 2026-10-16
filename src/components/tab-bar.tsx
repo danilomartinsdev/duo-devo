@@ -6,11 +6,11 @@ import { usePathname } from 'next/navigation'
 export function TabBar() {
   const pathname = usePathname()
 
-  const tabs = [
+  const tabs: { href: string; label: string; icone: (p: { ativo: boolean }) => React.ReactNode; ativo: boolean; futuro?: boolean }[] = [
     { href: '/hoje', label: 'Hoje', icone: IconeSol, ativo: pathname.startsWith('/hoje') },
     { href: '/progresso', label: 'Progresso', icone: IconeGrafico, ativo: pathname.startsWith('/progresso') },
-    { href: '/oracao', label: 'Oração', icone: IconeCoracao, ativo: false, futuro: true },
-    { href: '/configuracoes', label: 'Ajustes', icone: IconeSliders, ativo: false, futuro: true },
+    { href: '/oracao', label: 'Oração', icone: IconeCoracao, ativo: pathname.startsWith('/oracao') },
+    { href: '/configuracoes', label: 'Ajustes', icone: IconeSliders, ativo: pathname.startsWith('/configuracoes') },
   ]
 
   return (

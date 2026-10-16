@@ -78,7 +78,7 @@ export function EscolherPlano() {
       <button
         type="submit"
         disabled={pending}
-        className="touch-target rounded-full bg-accent px-6 font-medium text-white disabled:opacity-50"
+        className="touch-target presiona rounded-full bg-accent px-6 py-3 font-semibold text-white shadow-[0_10px_24px_-10px_rgb(99_102_241_0.55)] disabled:opacity-50"
       >
         {pending ? 'Preparando…' : 'Começar'}
       </button>

@@ -1,27 +1,78 @@
 @import "tailwindcss";
 
 /*
- * DuoDevo — visual de startup: neutro frio (branco/slate), um acento
- * índigo, tipografia sans forte. Escuro entra na fase 3 com estes
- * mesmos tokens invertidos.
+ * DuoDevo — tema de startup: neutro frio + um acento por paleta.
+ * Duas dimensões, setadas no <html>: data-tema (paleta) e data-modo
+ * (claro | escuro | sistema). Neutros são compartilhados; cada paleta
+ * só troca o acento — o escuro deriva com color-mix.
  */
 @theme {
   --font-display: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  --color-page: #f8fafc;
-  --color-surface: #ffffff;
-  --color-card: #ffffff;
-  --color-ink: #0f172a;
-  --color-muted: #64748b;
-  --color-line: #e2e8f0;
+  --color-page: var(--c-page);
+  --color-surface: var(--c-surface);
+  --color-card: var(--c-surface);
+  --color-ink: var(--c-ink);
+  --color-muted: var(--c-muted);
+  --color-line: var(--c-line);
+  --color-accent: var(--c-accent);
+  --color-accent-strong: var(--c-accent-strong);
+  --color-accent-soft: var(--c-accent-soft);
+  --color-alert: var(--c-alert);
+  --color-alert-soft: var(--c-alert-soft);
+  --color-parceiro: #f9b024; /* o "outro" nas barras de progresso */
 
-  --color-accent: #6366f1;
-  --color-accent-strong: #4f46e5;
-  --color-accent-soft: #eef2ff;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+}
 
-  --color-alert: #e11d48;
-  --color-alert-soft: #ffe4e6;
+/* ---------- neutros ---------- */
+:root {
+  --c-page: #f8fafc;
+  --c-surface: #ffffff;
+  --c-ink: #0f172a;
+  --c-muted: #64748b;
+  --c-line: #e2e8f0;
+  --c-alert: #e11d48;
+  --c-accent: #6366f1;
+  --c-accent-strong: #4f46e5;
+  --c-accent-soft: #eef2ff;
+  --c-alert-soft: #ffe4e6;
+}
+
+/* ---------- paletas (só o acento muda; o default é próprio :root) ---------- */
+:root[data-tema='oceano'] { --c-accent: #0ea5e9; --c-accent-strong: #0284c7; --c-accent-soft: #e0f2fe; }
+:root[data-tema='floresta'] { --c-accent: #16a34a; --c-accent-strong: #15803d; --c-accent-soft: #dcfce7; }
+:root[data-tema='mel'] { --c-accent: #d97706; --c-accent-strong: #b45309; --c-accent-soft: #fef3c7; }
+:root[data-tema='grafeno'] { --c-accent: #64748b; --c-accent-strong: #475569; --c-accent-soft: #eef1f6; }
+:root[data-tema='magenta'] { --c-accent: #db2777; --c-accent-strong: #be185d; --c-accent-soft: #fce7f3; }
+
+/* ---------- escuro ---------- */
+[data-modo='escuro'] {
+  --c-page: #0b0f1a;
+  --c-surface: #141b2d;
+  --c-ink: #e7eaf3;
+  --c-muted: #93a0b4;
+  --c-line: #232c42;
+  --c-alert-soft: color-mix(in srgb, var(--c-alert) 18%, var(--c-surface));
+  --c-accent: color-mix(in srgb, var(--c-accent) 80%, white);
+  --c-accent-strong: color-mix(in srgb, var(--c-accent-strong) 80%, white);
+  --c-accent-soft: color-mix(in srgb, var(--c-accent) 18%, var(--c-surface));
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-modo='sistema'] {
+    --c-page: #0b0f1a;
+    --c-surface: #141b2d;
+    --c-ink: #e7eaf3;
+    --c-muted: #93a0b4;
+    --c-line: #232c42;
+    --c-alert-soft: color-mix(in srgb, var(--c-alert) 18%, var(--c-surface));
+    --c-accent: color-mix(in srgb, var(--c-accent) 80%, white);
+    --c-accent-strong: color-mix(in srgb, var(--c-accent-strong) 80%, white);
+    --c-accent-soft: color-mix(in srgb, var(--c-accent) 18%, var(--c-surface));
+  }
 }
 
 html {
@@ -30,9 +81,10 @@ html {
 }
 
 body {
-  background-color: var(--color-page);
-  color: var(--color-ink);
+  background-color: var(--c-page);
+  color: var(--c-ink);
   font-family: var(--font-sans);
+  transition: background-color 0.25s ease, color 0.25s ease;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -42,12 +94,12 @@ h1, h2 {
 }
 
 ::selection {
-  background-color: var(--color-accent-soft);
-  color: var(--color-accent-strong);
+  background-color: var(--c-accent-soft);
+  color: var(--c-accent-strong);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--c-accent);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -67,4 +119,21 @@ h1, h2 {
 .touch-target {
   min-height: 44px;
   min-width: 44px;
+}
+
+/* sombra sutil estilo card iOS */
+.sombra {
+  box-shadow:
+    0 1px 2px rgb(2 6 23 / 0.05),
+    0 12px 32px -20px rgb(2 6 23 / 0.14);
+}
+
+/* resposta ao toque nos elementos clicáveis */
+.pressiona {
+  transition:
+    transform 0.18s cubic-bezier(0.3, 0.9, 0.4, 1),
+    opacity 0.18s ease;
+}
+.pressiona:active {
+  transform: scale(0.97);
 }

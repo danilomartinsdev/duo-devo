@@ -20,7 +20,7 @@ export default async function ProgressoPage() {
 
   return (
     <section className="pt-4 pb-8">
-      <h1 className="font-display text-3xl">Progresso</h1>
+      <h1 className="font-display text-[34px] leading-[1.12]">Progresso</h1>
       <p className="mt-1 text-sm text-muted">
         Sem ranking, sem corrida. Cada livro é um passo do caminho.
       </p>
@@ -109,7 +109,7 @@ function LinhaLivro({
 
 function Dado({ valor, rotulo }: { valor: string; rotulo: string }) {
   return (
-    <div className="rounded-2xl border border-line bg-surface p-3">
+    <div className="rounded-2xl border border-line bg-surface p-3 sombra">
       <p className="font-display text-lg">{valor}</p>
       <p className="text-xs text-muted">{rotulo}</p>
     </div>

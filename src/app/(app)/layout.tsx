@@ -16,10 +16,12 @@ export default async function AppLayout({
   if (!perfil) redirect('/login')
 
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-5 pt-[max(1rem,env(safe-area-inset-top))]">
-      <header className="flex items-center justify-between py-4">
-        <span className="font-display text-xl font-semibold tracking-tight">DuoDevo</span>
-        <LogoutButton nome={perfil.display_name} />
+    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-5 pt-[max(0.5rem,env(safe-area-inset-top))]">
+      <header className="sticky top-0 z-20 -mx-5 px-5 py-3 bg-page/80 backdrop-blur-md border-b border-line/60 flex items-center justify-between">
+        <span className="font-display text-[22px] font-semibold tracking-tight">
+          Duo<span className="text-accent">Devo</span>
+        </span>
+        <LogoutButton nome={perfil.display_name} avatarUrl={perfil.avatar_url} />
       </header>
       <main className="flex-1 pb-24">
         {children}

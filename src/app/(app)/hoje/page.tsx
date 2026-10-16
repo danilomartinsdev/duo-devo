@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { getCurrentProfile } from '@/lib/profile'
 import { estadoHoje } from '@/lib/leituras'
 import { formatarDia } from '@/lib/datas'
+import { calculeJardim } from '@/lib/jardim'
 import { EscolherPlano } from '@/components/leitura/escolher-plano'
 
 export const metadata = { title: 'Hoje' }
@@ -17,7 +18,7 @@ export default async function HojePage() {
       <p className="text-xs uppercase tracking-widest text-muted">
         {formatarDia(estado.hoje, perfil.timezone)}
       </p>
-      <h1 className="mt-1 font-display text-3xl">
+      <h1 className="mt-1 font-display text-[34px] leading-[1.12]">
         {saudacao()}, {inicial(perfil.display_name)}
       </h1>
 
@@ -89,7 +90,30 @@ function CartaoHoje({ estado, perfilId }: { estado: Awaited<ReturnType<typeof es
         </p>
       )}
 
+      <CartaoJardim estado={estado} />
+
       <MetaHoje total={estado.totais.voce + estado.totais.parceiro} />
+    </div>
+  )
+}
+
+function CartaoJardim({ estado }: { estado: Awaited<ReturnType<typeof estadoHoje>> }) {
+  const jardim = calculeJardim(estado.diasMeus, estado.diasParceiro, estado.hoje)
+  const icone = ['🌱', '🌿', '☘️', '🪴', '🌳', '🌸'][jardim.estagio]!
+
+  return (
+    <div className="rounded-3xl border border-line bg-surface p-5 sombra">
+      <div className="flex items-center gap-3">
+        <span aria-hidden className="text-3xl">{icone}</span>
+        <div>
+          <p className="font-display text-lg">{jardim.nome}</p>
+          <p className="text-xs text-muted">
+            {jardim.sequencia > 0
+              ? `${jardim.sequencia} ${jardim.sequencia === 1 ? 'dia' : 'dias'} em fila pelo time — cada dia lido pelos dois faz crescer mais um pouquinho.`
+              : 'O jardim cresce quando os dois leem no mesmo dia. Um dia de cada vez, sem culpa.'}
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

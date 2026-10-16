@@ -12,6 +12,8 @@ export type EstadoHoje = {
   capitulosHoje: CapituloRef[]
   lidosSet: Set<string> // "livro/cap" já lidos (qualquer dia)
   lidosHoje: Set<string> // lidos hoje de fato
+  diasMeus: Set<string>
+  diasParceiro: Set<string>
   parceiro: { id: string; nome: string } | null
   lidosParceiroHoje: number
   diasEmComum: number
@@ -74,6 +76,8 @@ export async function estadoHoje(perfil: Profile): Promise<EstadoHoje> {
     lidosHoje: new Set(
       minhas.filter((r) => r.lido_em === hoje).map((r) => `${r.livro}/${r.capitulo}`),
     ),
+    diasMeus: diasVoce,
+    diasParceiro,
     parceiro: parceiroId
       ? { id: parceiroId, nome: ((parceiroPerfilRow?.data as { display_name?: string } | null)?.display_name ?? '?') }
       : null,

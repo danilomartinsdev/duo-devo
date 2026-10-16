@@ -108,26 +108,28 @@ export function Leitor({
         ))}
       </div>
 
-      <footer className="sticky bottom-[calc(env(safe-area-inset-bottom)+56px)] mt-8 flex flex-col gap-2 border-t border-line pt-4 bg-surface">
-        <button
-          type="button"
-          onClick={terminar}
-          disabled={salvando}
-          className="touch-target rounded-full bg-accent px-6 font-medium text-white disabled:opacity-50"
-        >
-          {salvando ? 'Salvando…' : lido ? 'Fiquei por aqui' : 'Terminei este capítulo'}
-        </button>
-        {proximo && lido ? (
+      <footer className="sticky bottom-4 mt-8">
+        <div className="flex gap-2 rounded-full border border-line bg-surface/90 p-2 sombra backdrop-blur-md">
           <button
             type="button"
-            onClick={() =>
-              router.push(`/leitura/${proximo.livro}/${proximo.cap}`)
-            }
-            className="touch-target rounded-full border border-line px-6 text-muted"
+            onClick={terminar}
+            disabled={salvando}
+            className="touch-target presiona flex-1 rounded-full bg-accent px-6 py-3 font-semibold text-white disabled:opacity-50"
           >
-            Continuar lendo → {capituloCurto(proximo)}
+            {salvando ? 'Salvando…' : lido ? 'Fiquei por aqui' : 'Terminei este capítulo'}
           </button>
-        ) : null}
+          {proximo && lido ? (
+            <button
+              type="button"
+              onClick={() =>
+                router.push(`/leitura/${proximo.livro}/${proximo.cap}`)
+              }
+              className="touch-target presiona rounded-full border border-line px-5 text-sm text-muted"
+            >
+              {capituloCurto(proximo)} →
+            </button>
+          ) : null}
+        </div>
       </footer>
     </article>
   )

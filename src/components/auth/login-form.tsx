@@ -82,7 +82,7 @@ function Botao({ pending, children }: { pending: boolean; children: React.ReactN
     <button
       type="submit"
       disabled={pending}
-      className="touch-target mt-2 rounded-full bg-accent px-6 font-medium text-white transition-opacity disabled:opacity-50"
+      className="touch-target presiona mt-2 rounded-full bg-accent px-6 py-3 font-semibold text-white shadow-[0_10px_24px_-10px_rgb(99_102_241_0.55)] transition-opacity disabled:opacity-50"
     >
       {pending ? 'Um instante…' : children}
     </button>
