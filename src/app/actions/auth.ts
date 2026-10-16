@@ -87,6 +87,7 @@ export async function signUpAction(
   })
 
   if (error) {
+    console.error('[signup] erro do Supabase:', error.status, error.message)
     if (error.message.includes('already registered')) {
       return { error: 'Já existe uma conta com este usuário. Use "Entrar".' }
     }
