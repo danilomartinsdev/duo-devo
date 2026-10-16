@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+/*
+ * OurDevo — "Caderno de leitura a dois".
+ * Tokens da direção visual: papel quente, tinta, verde-salvia e terracota.
+ * Fase 3 adiciona as outras paletas e o modo escuro — por ora, base clara.
+ */
+@theme {
+  --font-serif: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+
+  --color-paper: #faf7f0;
+  --color-paper-soft: #f2ecdf;
+  --color-ink: #33302b;
+  --color-ink-soft: #746b5e;
+  --color-line: #e5dccb;
+
+  --color-sage-100: #e3ece0;
+  --color-sage-400: #8fa87f;
+  --color-sage-600: #5d7c55;
+  --color-sage-700: #48623f;
+
+  --color-clay-100: #f4e3d8;
+  --color-clay-400: #cf8f6a;
+  --color-clay-500: #bd6f49;
+  --color-clay-600: #a15433;
+}
+
+html {
+  /* iOS: evita zoom automático em inputs com fonte < 16px */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--color-clay-100);
+  color: var(--color-clay-600);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sage-600);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* alvos de toque confortáveis em iOS (44px mínimo) */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
