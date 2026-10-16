@@ -1,0 +1,137 @@
+[
+  {
+    "slug": "mateus",
+    "nome": "Mateus",
+    "caps": 28
+  },
+  {
+    "slug": "marcos",
+    "nome": "Marcos",
+    "caps": 16
+  },
+  {
+    "slug": "lucas",
+    "nome": "Lucas",
+    "caps": 24
+  },
+  {
+    "slug": "joao",
+    "nome": "João",
+    "caps": 21
+  },
+  {
+    "slug": "atos",
+    "nome": "Atos dos Apóstolos",
+    "caps": 28
+  },
+  {
+    "slug": "romanos",
+    "nome": "Romanos",
+    "caps": 16
+  },
+  {
+    "slug": "1corintios",
+    "nome": "1ª Coríntios",
+    "caps": 16
+  },
+  {
+    "slug": "2corintios",
+    "nome": "2ª Coríntios",
+    "caps": 13
+  },
+  {
+    "slug": "galatas",
+    "nome": "Gálatas",
+    "caps": 6
+  },
+  {
+    "slug": "efesios",
+    "nome": "Efésios",
+    "caps": 6
+  },
+  {
+    "slug": "filipenses",
+    "nome": "Filipenses",
+    "caps": 4
+  },
+  {
+    "slug": "colossenses",
+    "nome": "Colossenses",
+    "caps": 4
+  },
+  {
+    "slug": "1tessalonicenses",
+    "nome": "1ª Tessalonicenses",
+    "caps": 5
+  },
+  {
+    "slug": "2tessalonicenses",
+    "nome": "2ª Tessalonicenses",
+    "caps": 3
+  },
+  {
+    "slug": "1timoteo",
+    "nome": "1ª Timóteo",
+    "caps": 6
+  },
+  {
+    "slug": "2timoteo",
+    "nome": "2ª Timóteo",
+    "caps": 4
+  },
+  {
+    "slug": "tito",
+    "nome": "Tito",
+    "caps": 3
+  },
+  {
+    "slug": "filemon",
+    "nome": "Filémon",
+    "caps": 1
+  },
+  {
+    "slug": "hebreus",
+    "nome": "Hebreus",
+    "caps": 13
+  },
+  {
+    "slug": "tiago",
+    "nome": "Tiago",
+    "caps": 5
+  },
+  {
+    "slug": "1pedro",
+    "nome": "1ª Pedro",
+    "caps": 5
+  },
+  {
+    "slug": "2pedro",
+    "nome": "2ª Pedro",
+    "caps": 3
+  },
+  {
+    "slug": "1joao",
+    "nome": "1ª João",
+    "caps": 5
+  },
+  {
+    "slug": "2joao",
+    "nome": "2ª João",
+    "caps": 1
+  },
+  {
+    "slug": "3joao",
+    "nome": "3ª João",
+    "caps": 1
+  },
+  {
+    "slug": "judas",
+    "nome": "Judas",
+    "caps": 1
+  },
+  {
+    "slug": "apocalipse",
+    "nome": "Apocalipse",
+    "caps": 22
+  }
+]

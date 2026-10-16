@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { getCurrentProfile } from '@/lib/profile'
 import { LogoutButton } from '@/components/auth/logout-button'
+import { TabBar } from '@/components/tab-bar'
 
 /**
  * Layout das telas autenticadas. O gate fica aqui (e na RLS do banco) —
@@ -20,9 +21,10 @@ export default async function AppLayout({
         <span className="font-serif text-xl italic">OurDevo</span>
         <LogoutButton nome={perfil.display_name} />
       </header>
-      <main className="flex-1 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+      <main className="flex-1 pb-24">
         {children}
       </main>
+      <TabBar />
     </div>
   )
 }

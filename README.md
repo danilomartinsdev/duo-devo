@@ -11,7 +11,8 @@ compartilhado, pedidos de oração e um jardim que só cresce quando as duas lee
 | Fase | O quê | Estado |
 |---|---|---|
 | 1 | Setup, auth por convite, RLS | ✅ feita |
-| 2 | Leitura + progresso | ⬜ |
+| 2 | Leitura + progresso | ✅ feita |
+| 3 | Perfil + temas + tela de ajustes (lembretes/notificações) | ⬜ |
 | 3 | Perfil + temas | ⬜ |
 | 4 | Gamificação (jardim, streak da dupla) | ⬜ |
 | 5 | Push + agendamento (pg_cron + Edge Function) | ⬜ |
@@ -19,7 +20,7 @@ compartilhado, pedidos de oração e um jardim que só cresce quando as duas lee
 
 ## Setup local
 
-1. **Banco de dados** — crie o projeto no [Supabase](https://supabase.com) (região `South America` para latência), depois abra o **SQL Editor** e rode na íntegra o arquivo `supabase/01_schema.sql`. Antes de rodar, edite o bloco `insert into public.allowed_users` com os e-mails dos dois convidados.
+1. **Banco de dados** — crie o projeto no [Supabase](https://supabase.com) (região `South America` para latência), depois abra o **SQL Editor** e rode na íntegra, **em ordem**: `supabase/01_schema.sql` e `supabase/02_leitura.sql`. Antes de rodar, edite o bloco `insert into public.allowed_users` com os e-mails dos dois convidados.
 2. **Variáveis de ambiente** — `cp .env.example .env.local` e preencha com os valores de *Settings → API* no painel do Supabase. A `service_role` fica **apenas** neste arquivo: nunca vá para o git nem para o cliente.
 3. **Template de e-mail** — no painel: *Authentication → Emails*. Nas templates **Magic Link** e **Confirm Signup**, troque `{{ .ConfirmationURL }}` por `{{ .TokenHash }}` e o link por `<URL_DO_APP>/auth/confirm?token_hash={{ .TokenHash }}&type=…` (ex.: `…/auth/confirm?token_hash={{ .TokenHash }}&type=magiclink`).
 4. **URLs de auth** — *Authentication → URL Configuration*: Site URL = `http://localhost:3000` (e a URL da Vercel depois); Redirect URLs: adicione `<URL>/auth/confirm`.
@@ -54,6 +55,18 @@ compartilhado, pedidos de oração e um jardim que só cresce quando as duas lee
 
 - `.tool-versions`: Node 26 (o asdf lê este arquivo).
 - Verificação de tipos: `npm run typecheck`.
+
+## Texto bíblico
+
+Tradução **João Ferreira de Almeida** (domínio público), convertida dos arquivos
+[USFX do projeto open-bibles](https://github.com/seven1m/open-bibles) (27 livros
+do NT, 260 capítulos, 7.697 versículos) e armazenada em `public/biblia/`
+(27 pastas + índice). Para regenerar:
+
+```bash
+curl -L -o /tmp/por-almeida.usfx.xml https://raw.githubusercontent.com/seven1m/open-bibles/master/por-almeida.usfx.xml
+node scripts/gerar-biblia.mjs /tmp/por-almeida.usfx.xml
+```
 
 ## Como instalar no iPhone (usuária final)
 
