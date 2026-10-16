@@ -19,10 +19,10 @@ export default async function FimPage({
     <section className="pt-10">
       <div className="text-center">
         <span aria-hidden className="text-4xl">🕊</span>
-        <h1 className="mt-3 font-serif text-3xl">
+        <h1 className="mt-3 font-display text-3xl">
           {dados ? `${dados.livroNome} ${cap}` : 'Capítulo lido'}
         </h1>
-        <p className="mt-2 text-sm text-ink-soft">
+        <p className="mt-2 text-sm text-muted">
           Semeado hoje. Que continue germinando no resto do dia.
         </p>
       </div>

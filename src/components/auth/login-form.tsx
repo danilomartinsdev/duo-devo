@@ -16,7 +16,7 @@ export function LoginForm() {
       <div
         role="tablist"
         aria-label="Como entrar"
-        className="mb-8 flex gap-1 rounded-full bg-paper-soft p-1 text-sm"
+        className="mb-8 flex gap-1 rounded-full bg-card p-1 text-sm"
       >
         <TabButton ativo={modo === 'entrar'} onClick={() => setModo('entrar')}>
           Entrar
@@ -52,7 +52,7 @@ function FormaPrimeira() {
       <Campo label="Senha" name="password" type="password" autoComplete="new-password" />
       <Mensagens state={state} />
       <Botao pending={pending}>Criar minha conta</Botao>
-      <p className="text-center text-xs text-ink-soft">
+      <p className="text-center text-xs text-muted">
         Só os usuários da lista de convites criam conta — a lista é nossa.
       </p>
     </form>
@@ -62,14 +62,14 @@ function FormaPrimeira() {
 function Mensagens({ state }: { state: AuthActionState }) {
   if (state.error) {
     return (
-      <p role="alert" className="text-sm text-clay-600">
+      <p role="alert" className="text-sm text-alert">
         {state.error}
       </p>
     )
   }
   if (state.message) {
     return (
-      <p role="status" className="text-sm text-sage-700">
+      <p role="status" className="text-sm text-accent-strong">
         {state.message}
       </p>
     )
@@ -82,7 +82,7 @@ function Botao({ pending, children }: { pending: boolean; children: React.ReactN
     <button
       type="submit"
       disabled={pending}
-      className="touch-target mt-2 rounded-full bg-sage-600 px-6 font-medium text-white transition-opacity disabled:opacity-50"
+      className="touch-target mt-2 rounded-full bg-accent px-6 font-medium text-white transition-opacity disabled:opacity-50"
     >
       {pending ? 'Um instante…' : children}
     </button>
@@ -105,7 +105,7 @@ function TabButton({
       aria-selected={ativo}
       onClick={onClick}
       className={`touch-target flex-1 rounded-full px-3 py-2 transition-colors ${
-        ativo ? 'bg-paper font-medium text-ink shadow-sm' : 'text-ink-soft'
+        ativo ? 'bg-surface font-medium text-ink shadow-sm' : 'text-muted'
       }`}
     >
       {children}
@@ -124,11 +124,11 @@ function Campo({
 }) {
   return (
     <label className="flex flex-col gap-1.5 text-sm">
-      <span className="text-ink-soft">{label}</span>
+      <span className="text-muted">{label}</span>
       <input
         {...props}
         required
-        className="touch-target rounded-xl border border-line bg-paper px-4 text-base outline-none focus:border-sage-400"
+        className="touch-target rounded-xl border border-line bg-surface px-4 text-base outline-none focus:border-accent"
       />
     </label>
   )

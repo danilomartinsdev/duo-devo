@@ -14,10 +14,10 @@ export default async function HojePage() {
 
   return (
     <section className="pt-4">
-      <p className="text-xs uppercase tracking-widest text-ink-soft">
+      <p className="text-xs uppercase tracking-widest text-muted">
         {formatarDia(estado.hoje, perfil.timezone)}
       </p>
-      <h1 className="mt-1 font-serif text-3xl">
+      <h1 className="mt-1 font-display text-3xl">
         {saudacao()}, {inicial(perfil.display_name)}
       </h1>
 
@@ -44,10 +44,10 @@ function CartaoHoje({ estado, perfilId }: { estado: Awaited<ReturnType<typeof es
   return (
     <div className="mt-8 flex flex-col gap-5">
       {estado.capitulosHoje.length === 0 ? (
-        <div className="rounded-3xl border border-line bg-paper-soft p-6 text-center">
+        <div className="rounded-3xl border border-line bg-card p-6 text-center">
           <span aria-hidden className="text-4xl">🌿</span>
-          <p className="mt-2 font-serif text-xl">Plano concluído</p>
-          <p className="mt-1 text-sm text-ink-soft">
+          <p className="mt-2 font-display text-xl">Plano concluído</p>
+          <p className="mt-1 text-sm text-muted">
             O NT inteiro no seu ritmo. Escolha um plano novo ou só releia o que
             te marcou.
           </p>
@@ -55,16 +55,16 @@ function CartaoHoje({ estado, perfilId }: { estado: Awaited<ReturnType<typeof es
       ) : (
         <Link
           href={proximo ? `/leitura/${proximo.livro}/${proximo.cap}` : '/'}
-          className="rounded-3xl border border-line bg-paper-soft p-6 transition-transform active:scale-[0.99]"
+          className="rounded-3xl border border-line bg-card p-6 transition-transform active:scale-[0.99]"
         >
-          <p className="text-xs tracking-widest text-ink-soft">
+          <p className="text-xs tracking-widest text-muted">
             {lidosDeHoje.length === 0
               ? 'LEITURA DE HOJE'
               : faltam.length === 0
                 ? 'HOJE ESTÁ FEITO 🌱'
                 : 'CONTINUA HOJE'}
           </p>
-          <p className="mt-2 font-serif text-2xl leading-snug">
+          <p className="mt-2 font-display text-2xl leading-snug">
             {estado.capitulosHoje.map((c, i) => (
               <span key={`${c.livro}/${c.cap}`}>
                 {i > 0 ? ' · ' : ''}
@@ -72,7 +72,7 @@ function CartaoHoje({ estado, perfilId }: { estado: Awaited<ReturnType<typeof es
               </span>
             ))}
           </p>
-          <p className="mt-3 text-sm text-sage-700">
+          <p className="mt-3 text-sm text-accent-strong">
             {faltam.length > 0
               ? `Abrir ${faltam.length > 1 ? `${faltam[0]!.nome} ${faltam[0]!.cap}` : 'capítulo'} →`
               : 'Ler de novo, ou guardar pro dia'}
@@ -83,7 +83,7 @@ function CartaoHoje({ estado, perfilId }: { estado: Awaited<ReturnType<typeof es
       {estado.parceiro ? (
         <CartaoParceiro estado={estado} />
       ) : (
-        <p className="rounded-2xl border border-dashed border-line px-4 py-3 text-center text-sm text-ink-soft">
+        <p className="rounded-2xl border border-dashed border-line px-4 py-3 text-center text-sm text-muted">
           A dupla ainda não foi formada no banco — rode o SQL "Criar a dupla"
           quando os dois estiverem cadastrados.
         </p>
@@ -99,7 +99,7 @@ function CartaoParceiro({ estado }: { estado: Awaited<ReturnType<typeof estadoHo
   const leu = estado.lidosParceiroHoje > 0
 
   return (
-    <div className="rounded-3xl bg-sage-100/70 p-5">
+    <div className="rounded-3xl bg-accent-soft/70 p-5">
       {leu ? (
         <p className="text-sm">
           🌱 <strong>{nome}</strong> já semeou hoje — {estado.lidosParceiroHoje}{' '}
@@ -112,7 +112,7 @@ function CartaoParceiro({ estado }: { estado: Awaited<ReturnType<typeof estadoHo
         </p>
       )}
       {estado.diasEmComum > 0 ? (
-        <p className="mt-2 text-xs text-ink-soft">
+        <p className="mt-2 text-xs text-muted">
           Vocês já leram no mesmo dia {estado.diasEmComum}{' '}
           {estado.diasEmComum === 1 ? 'vez' : 'vezes'}.
         </p>
@@ -123,7 +123,7 @@ function CartaoParceiro({ estado }: { estado: Awaited<ReturnType<typeof estadoHo
 
 function MetaHoje({ total }: { total: number }) {
   return (
-    <p className="text-center text-xs text-ink-soft">
+    <p className="text-center text-xs text-muted">
       {total === 0
         ? 'O primeiro capítulo é o mais difícil — depois flui.'
         : `${total} ${total === 1 ? 'capítulo semeado' : 'capítulos semeados'} pela dupla até agora.`}

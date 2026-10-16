@@ -1,7 +1,9 @@
-# OurDevo
+# DuoDevo
 
-Devocional a dois: um PWA para ler o Novo Testamento em dupla, com progresso
-compartilhado, pedidos de oração e um jardim que só cresce quando as duas leem.
+Leiam a Bíblia em dupla: o devocional começa pelo Novo Testamento (planos de
+leitura), e a Bíblia inteira (66 livros, Almeida domínio público) está aberta
+para leitura livre. Progresso compartilhado, pedidos de oração e um jardim que
+só cresce quando as duas leem.
 
 - Interface em pt-BR · mobile-first · instalável no iPhone (Adicionar à Tela de Início)
 - Stack: Next.js (App Router) + TypeScript + Tailwind v4 + Motion, Supabase (Auth/Postgres/Storage), Web Push (VAPID), Vercel.
@@ -22,7 +24,7 @@ compartilhado, pedidos de oração e um jardim que só cresce quando as duas lee
 
 1. **Banco de dados** — crie o projeto no [Supabase](https://supabase.com) (região `South America` para latência), depois abra o **SQL Editor** e rode na íntegra, **em ordem**: `supabase/01_schema.sql` e `supabase/02_leitura.sql`. Antes de rodar, edite o bloco `insert into public.allowed_users` com os e-mails dos dois convidados.
 2. **Variáveis de ambiente** — `cp .env.example .env.local` e preencha com os valores de *Settings → API* no painel do Supabase. A `service_role` fica **apenas** neste arquivo: nunca vá para o git nem para o cliente.
-3. **Login** — o OurDevo usa **e-mail + senha**, sem e-mail de confirmação. No painel: *Authentication → Sign In / Providers → Email* → **desligue o toggle "Confirm email"**. Assim o cadastro em "1º acesso" já loga direto — o trigger do banco cria o perfil e valida que o e-mail está na lista de convites. A rota `/auth/confirm` fica como rede de segurança, fora do fluxo normal.
+3. **Login** — o DuoDevo usa **e-mail + senha**, sem e-mail de confirmação. No painel: *Authentication → Sign In / Providers → Email* → **desligue o toggle "Confirm email"**. Assim o cadastro em "1º acesso" já loga direto — o trigger do banco cria o perfil e valida que o e-mail está na lista de convites. A rota `/auth/confirm` fica como rede de segurança, fora do fluxo normal.
 4. **URLs de auth** — *Authentication → URL Configuration*: Site URL = `http://localhost:3000` (e a URL da Vercel depois); Redirect URLs: adicione `<URL>/auth/confirm`.
 5. Rodar: `npm run dev` → `http://localhost:3000`.
 
@@ -64,9 +66,11 @@ compartilhado, pedidos de oração e um jardim que só cresce quando as duas lee
 ## Texto bíblico
 
 Tradução **João Ferreira de Almeida** (domínio público), convertida dos arquivos
-[USFX do projeto open-bibles](https://github.com/seven1m/open-bibles) (27 livros
-do NT, 260 capítulos, 7.697 versículos) e armazenada em `public/biblia/`
-(27 pastas + índice). Para regenerar:
+[USFX do projeto open-bibles](https://github.com/seven1m/open-bibles) — **Bíblia
+completa: 66 livros, 1.189 capítulos, 29.909 versículos** — armazenada em
+`public/biblia/` (66 pastas + índice com o campo `testamento`). Os planos de
+leitura usam apenas o Novo Testamento; o Antigo fica aberto para leitura livre
+na tela de Progresso. Para regenerar:
 
 ```bash
 curl -L -o /tmp/por-almeida.usfx.xml https://raw.githubusercontent.com/seven1m/open-bibles/master/por-almeida.usfx.xml

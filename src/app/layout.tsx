@@ -1,25 +1,25 @@
 import type { Metadata, Viewport } from 'next'
-import { Fraunces, Outfit } from 'next/font/google'
+import { Inter, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 
-const fraunces = Fraunces({
+const grotesk = Space_Grotesk({
   subsets: ['latin'],
-  variable: '--font-fraunces',
+  variable: '--font-grotesk',
   display: 'swap',
 })
 
-const outfit = Outfit({
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-outfit',
+  variable: '--font-inter',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
   title: {
-    default: 'OurDevo — devocional a dois',
-    template: '%s · OurDevo',
+    default: 'DuoDevo',
+    template: '%s · DuoDevo',
   },
-  description: 'Leitura do Novo Testamento em dupla, com progresso compartilhado.',
+  description: 'Leiam o Novo Testamento em dupla — progresso compartilhado.',
 }
 
 export const viewport: Viewport = {
@@ -33,7 +33,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className={`${fraunces.variable} ${outfit.variable}`}>
+    <html lang="pt-BR" className={`${grotesk.variable} ${inter.variable}`}>
       <body>{children}</body>
     </html>
   )

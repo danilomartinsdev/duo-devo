@@ -14,7 +14,7 @@ export function EscolherPlano() {
 
   if (state.message === 'ok') {
     return (
-      <p className="animated-pulse rounded-2xl bg-sage-100 p-5 text-center text-sage-700" role="status">
+      <p className="animated-pulse rounded-2xl bg-accent-soft p-5 text-center text-accent-strong" role="status">
         Pronto! Preparando a leitura de hoje…
       </p>
     )
@@ -22,8 +22,8 @@ export function EscolherPlano() {
 
   return (
     <form action={action} className="flex flex-col gap-4">
-      <h2 className="font-serif text-2xl">Escolha um plano</h2>
-      <p className="-mt-2 text-sm text-ink-soft">
+      <h2 className="font-display text-2xl">Escolha um plano</h2>
+      <p className="-mt-2 text-sm text-muted">
         Nenhum é melhor que outro. Vocês podem trocar depois, sem drama.
       </p>
 
@@ -33,7 +33,7 @@ export function EscolherPlano() {
           <label
             key={p.key}
             className={`flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-colors ${
-              plano === p.key ? 'border-sage-600 bg-sage-100/60' : 'border-line bg-paper'
+              plano === p.key ? 'border-accent bg-accent-soft/60' : 'border-line bg-surface'
             }`}
           >
             <input
@@ -45,23 +45,23 @@ export function EscolherPlano() {
                 setPlano(p.key)
                 setMeta(p.meta_default)
               }}
-              className="mt-1 size-4 accent-[var(--color-sage-600)]"
+              className="mt-1 size-4 accent-[var(--color-accent)]"
             />
             <span>
               <span className="font-medium">{p.nome}</span>
-              <span className="block text-sm text-ink-soft">{p.descricao}</span>
+              <span className="block text-sm text-muted">{p.descricao}</span>
             </span>
           </label>
         ))}
       </fieldset>
 
       <label className="text-sm">
-        <span className="text-ink-soft">capítulos por dia (pode trocar sempre que quiser)</span>
+        <span className="text-muted">capítulos por dia (pode trocar sempre que quiser)</span>
         <select
           name="meta_diaria"
           value={meta}
           onChange={(e) => setMeta(Number(e.target.value))}
-          className="touch-target mt-1.5 w-full rounded-xl border border-line bg-paper px-4"
+          className="touch-target mt-1.5 w-full rounded-xl border border-line bg-surface px-4"
         >
           {[1, 2, 3, 4, 5, 6].map((n) => (
             <option key={n} value={n}>
@@ -72,13 +72,13 @@ export function EscolherPlano() {
       </label>
 
       {state.error ? (
-        <p role="alert" className="text-sm text-clay-600">{state.error}</p>
+        <p role="alert" className="text-sm text-alert">{state.error}</p>
       ) : null}
 
       <button
         type="submit"
         disabled={pending}
-        className="touch-target rounded-full bg-sage-600 px-6 font-medium text-white disabled:opacity-50"
+        className="touch-target rounded-full bg-accent px-6 font-medium text-white disabled:opacity-50"
       >
         {pending ? 'Preparando…' : 'Começar'}
       </button>

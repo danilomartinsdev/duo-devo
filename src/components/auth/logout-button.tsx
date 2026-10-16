@@ -7,12 +7,12 @@ export function LogoutButton({ nome }: { nome: string }) {
     <div className="flex items-center gap-3">
       <span
         aria-hidden
-        className="flex size-8 items-center justify-center rounded-full bg-sage-100 font-serif text-sm text-sage-700"
+        className="flex size-8 items-center justify-center rounded-full bg-accent-soft font-display text-sm text-accent-strong"
       >
         {inicial(nome)}
       </span>
       <form action={signOutAction}>
-        <button type="submit" className="text-sm text-ink-soft underline underline-offset-2">
+        <button type="submit" className="text-sm text-muted underline underline-offset-2">
           sair
         </button>
       </form>

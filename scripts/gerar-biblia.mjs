@@ -1,5 +1,5 @@
 /**
- * Gera os JSONs do Novo Testamento (Almeida, João Ferreira de — domínio
+ * Gera os JSONs da Bíblia COMPLETA (Almeida, João Ferreira de — domínio
  * público) a partir do arquivo USFX do projeto open-bibles:
  *   https://github.com/seven1m/open-bibles (arquivo por-almeida.usfx.xml)
  *
@@ -9,7 +9,7 @@
  *   node scripts/gerar-biblia.mjs /tmp/por-almeida.usfx.xml
  *
  * Saída (committed no git):
- *   public/biblia/livros.json          — índice dos 27 livros do NT
+ *   public/biblia/livros.json          — índice dos 66 livros (com testamento)
  *   public/biblia/<slug>/<cap>.json    — array de versículos do capítulo
  */
 
@@ -22,35 +22,74 @@ if (!ORIGEM) {
   process.exit(1)
 }
 
-// USFX id → [slug, nome em pt-BR]
-const NT = {
-  MAT: ['mateus', 'Mateus'],
-  MRK: ['marcos', 'Marcos'],
-  LUK: ['lucas', 'Lucas'],
-  JHN: ['joao', 'João'],
-  ACT: ['atos', 'Atos dos Apóstolos'],
-  ROM: ['romanos', 'Romanos'],
-  '1CO': ['1corintios', '1ª Coríntios'],
-  '2CO': ['2corintios', '2ª Coríntios'],
-  GAL: ['galatas', 'Gálatas'],
-  EPH: ['efesios', 'Efésios'],
-  PHP: ['filipenses', 'Filipenses'],
-  COL: ['colossenses', 'Colossenses'],
-  '1TH': ['1tessalonicenses', '1ª Tessalonicenses'],
-  '2TH': ['2tessalonicenses', '2ª Tessalonicenses'],
-  '1TI': ['1timoteo', '1ª Timóteo'],
-  '2TI': ['2timoteo', '2ª Timóteo'],
-  TIT: ['tito', 'Tito'],
-  PHM: ['filemon', 'Filémon'],
-  HEB: ['hebreus', 'Hebreus'],
-  JAS: ['tiago', 'Tiago'],
-  '1PE': ['1pedro', '1ª Pedro'],
-  '2PE': ['2pedro', '2ª Pedro'],
-  '1JN': ['1joao', '1ª João'],
-  '2JN': ['2joao', '2ª João'],
-  '3JN': ['3joao', '3ª João'],
-  JUD: ['judas', 'Judas'],
-  REV: ['apocalipse', 'Apocalipse'],
+// USFX id → [slug, nome em pt-BR, testamento ('antigo' | 'novo')]
+const BIBLIA = {
+  GEN: ['genesis', 'Gênesis', 'antigo'],
+  EXO: ['exodo', 'Êxodo', 'antigo'],
+  LEV: ['levitico', 'Levítico', 'antigo'],
+  NUM: ['numeros', 'Números', 'antigo'],
+  DEU: ['deuteronomio', 'Deuteronômio', 'antigo'],
+  JOS: ['josue', 'Josué', 'antigo'],
+  JDG: ['juizes', 'Juízes', 'antigo'],
+  RUT: ['rute', 'Rute', 'antigo'],
+  '1SA': ['1samuel', '1º Samuel', 'antigo'],
+  '2SA': ['2samuel', '2º Samuel', 'antigo'],
+  '1KI': ['1reis', '1º Reis', 'antigo'],
+  '2KI': ['2reis', '2º Reis', 'antigo'],
+  '1CH': ['1cronicas', '1º Crônicas', 'antigo'],
+  '2CH': ['2cronicas', '2º Crônicas', 'antigo'],
+  EZR: ['esdras', 'Esdras', 'antigo'],
+  NEH: ['neemias', 'Neemias', 'antigo'],
+  EST: ['ester', 'Ester', 'antigo'],
+  JOB: ['jo', 'Jó', 'antigo'],
+  PSA: ['salmos', 'Salmos', 'antigo'],
+  PRO: ['proverbios', 'Provérbios', 'antigo'],
+  ECC: ['eclesiastes', 'Eclesiastes', 'antigo'],
+  SNG: ['cantares', 'Cantares', 'antigo'],
+  ISA: ['isaias', 'Isaías', 'antigo'],
+  JER: ['jeremias', 'Jeremias', 'antigo'],
+  LAM: ['lamentacoes', 'Lamentações', 'antigo'],
+  EZK: ['ezequiel', 'Ezequiel', 'antigo'],
+  DAN: ['daniel', 'Daniel', 'antigo'],
+  HOS: ['oseias', 'Oséias', 'antigo'],
+  JOL: ['joel', 'Joel', 'antigo'],
+  AMO: ['amos', 'Amós', 'antigo'],
+  OBA: ['obadias', 'Obadias', 'antigo'],
+  JON: ['jonas', 'Jonas', 'antigo'],
+  MIC: ['miqueias', 'Miquéias', 'antigo'],
+  NAM: ['naum', 'Naum', 'antigo'],
+  HAB: ['habacuque', 'Habacuque', 'antigo'],
+  ZEP: ['sofonias', 'Sofonias', 'antigo'],
+  HAG: ['ageu', 'Ageu', 'antigo'],
+  ZEC: ['zacarias', 'Zacarias', 'antigo'],
+  MAL: ['malaquias', 'Malaquias', 'antigo'],
+  MAT: ['mateus', 'Mateus', 'novo'],
+  MRK: ['marcos', 'Marcos', 'novo'],
+  LUK: ['lucas', 'Lucas', 'novo'],
+  JHN: ['joao', 'João', 'novo'],
+  ACT: ['atos', 'Atos dos Apóstolos', 'novo'],
+  ROM: ['romanos', 'Romanos', 'novo'],
+  '1CO': ['1corintios', '1ª Coríntios', 'novo'],
+  '2CO': ['2corintios', '2ª Coríntios', 'novo'],
+  GAL: ['galatas', 'Gálatas', 'novo'],
+  EPH: ['efesios', 'Efésios', 'novo'],
+  PHP: ['filipenses', 'Filipenses', 'novo'],
+  COL: ['colossenses', 'Colossenses', 'novo'],
+  '1TH': ['1tessalonicenses', '1ª Tessalonicenses', 'novo'],
+  '2TH': ['2tessalonicenses', '2ª Tessalonicenses', 'novo'],
+  '1TI': ['1timoteo', '1ª Timóteo', 'novo'],
+  '2TI': ['2timoteo', '2ª Timóteo', 'novo'],
+  TIT: ['tito', 'Tito', 'novo'],
+  PHM: ['filemon', 'Filémon', 'novo'],
+  HEB: ['hebreus', 'Hebreus', 'novo'],
+  JAS: ['tiago', 'Tiago', 'novo'],
+  '1PE': ['1pedro', '1ª Pedro', 'novo'],
+  '2PE': ['2pedro', '2ª Pedro', 'novo'],
+  '1JN': ['1joao', '1ª João', 'novo'],
+  '2JN': ['2joao', '2ª João', 'novo'],
+  '3JN': ['3joao', '3ª João', 'novo'],
+  JUD: ['judas', 'Judas', 'novo'],
+  REV: ['apocalipse', 'Apocalipse', 'novo'],
 }
 
 const xml = readFileSync(ORIGEM, 'utf-8')
@@ -60,13 +99,14 @@ const livros = []
 let totalCaps = 0
 let totalVersos = 0
 
-for (const match of xml.matchAll(
-  /<book id="([^"]+)">(.*?)<\/book>/gs,
-)) {
+for (const match of xml.matchAll(/<book id="([^"]+)">(.*?)<\/book>/gs)) {
   const [, id, corpo] = match
-  const info = NT[id]
-  if (!info) continue // Antigo Testamento: ignorado
-  const [slug, nome] = info
+  const info = BIBLIA[id]
+  if (!info) {
+    console.warn(`⚠ livro sem tradução de id: ${id} — ignorado`)
+    continue
+  }
+  const [slug, nome, testamento] = info
 
   const caps = []
   // Cada capítulo: blocos <v id="n"/>texto<ve/>, separados por <c id="c"/>
@@ -75,8 +115,9 @@ for (const match of xml.matchAll(
     const numCap = Number(partes[i])
     const conteudo = partes[i + 1] ?? ''
     const versos = []
-    for (const v of conteudo.matchAll(/<v id="(\d+)"\s*\/>(.*?)(?=<v id="\d+"|<c id="\d+"|<\/book>|<h[ >])/gs)) {
-      // tira <ve/> e qualquer tag residual, normaliza espaços
+    for (const v of conteudo.matchAll(
+      /<v id="(\d+)"\s*\/>(.*?)(?=<v id="\d+"|<c id="\d+"|<\/book>|<h[ >])/gs,
+    )) {
       const texto = limpar(v[2])
       if (!texto) continue
       if (Number(v[1]) !== versos.length + 1) {
@@ -101,27 +142,26 @@ for (const match of xml.matchAll(
     )
   }
 
-  livros.push({ slug, nome, caps: caps.length, slug_key: id })
+  livros.push({ slug, nome, caps: caps.length, testamento, _ordem: id })
   totalCaps += caps.length
   totalVersos += caps.reduce((n, c) => n + c.versos.length, 0)
 }
 
-const ordemNT = Object.keys(NT)
-livros.sort((a, b) => ordemNT.indexOf(a.slug_key) - ordemNT.indexOf(b.slug_key))
+const ordem = Object.keys(BIBLIA)
+livros.sort((a, b) => ordem.indexOf(a._ordem) - ordem.indexOf(b._ordem))
 mkdirSync(saida, { recursive: true })
-// livros.json levou só o que interessa à app (ordem, slug, nome, nº de caps)
 writeFileSync(
   resolve(saida, 'livros.json'),
   JSON.stringify(
-    livros.map(l => ({ slug: l.slug, nome: l.nome, caps: l.caps })),
+    livros.map(({ slug, nome, caps, testamento }) => ({ slug, nome, caps, testamento })),
     null,
     2,
   ),
 )
 
-if (livros.length !== 27) throw new Error(`Esperava 27 livros, achei ${livros.length}`)
+if (livros.length !== 66) throw new Error(`Esperava 66 livros, achei ${livros.length}`)
 console.log(
-  `✓ Novo Testamento: ${livros.length} livros, ${totalCaps} capítulos, ${totalVersos} versículos → data/biblia/`,
+  `✓ Bíblia completa: ${livros.length} livros, ${totalCaps} capítulos, ${totalVersos} versículos → public/biblia/`,
 )
 
 function limpar(t) {

@@ -9,8 +9,8 @@ alter table public.allowed_users rename column email to usuario;
 -- >>> EDITE AQUI os usuários dos dois convidados:
 insert into public.allowed_users (usuario)
 values
-  ('seu-usuario'),
-  ('usuario-da-amiga')
+  ('danilo'),
+  ('jackeline')
 on conflict (usuario) do nothing;
 
 -- 2) Trigger atualizado: extrai o usuário do campo sintético

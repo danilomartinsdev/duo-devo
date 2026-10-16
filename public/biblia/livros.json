@@ -1,137 +1,398 @@
 [
   {
+    "slug": "genesis",
+    "nome": "Gênesis",
+    "caps": 50,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "exodo",
+    "nome": "Êxodo",
+    "caps": 40,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "levitico",
+    "nome": "Levítico",
+    "caps": 27,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "numeros",
+    "nome": "Números",
+    "caps": 36,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "deuteronomio",
+    "nome": "Deuteronômio",
+    "caps": 34,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "josue",
+    "nome": "Josué",
+    "caps": 24,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "juizes",
+    "nome": "Juízes",
+    "caps": 21,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "rute",
+    "nome": "Rute",
+    "caps": 4,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "1samuel",
+    "nome": "1º Samuel",
+    "caps": 31,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "2samuel",
+    "nome": "2º Samuel",
+    "caps": 24,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "1reis",
+    "nome": "1º Reis",
+    "caps": 22,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "2reis",
+    "nome": "2º Reis",
+    "caps": 25,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "1cronicas",
+    "nome": "1º Crônicas",
+    "caps": 29,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "2cronicas",
+    "nome": "2º Crônicas",
+    "caps": 36,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "esdras",
+    "nome": "Esdras",
+    "caps": 10,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "neemias",
+    "nome": "Neemias",
+    "caps": 13,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "ester",
+    "nome": "Ester",
+    "caps": 10,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "jo",
+    "nome": "Jó",
+    "caps": 42,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "salmos",
+    "nome": "Salmos",
+    "caps": 150,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "proverbios",
+    "nome": "Provérbios",
+    "caps": 31,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "eclesiastes",
+    "nome": "Eclesiastes",
+    "caps": 12,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "cantares",
+    "nome": "Cantares",
+    "caps": 8,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "isaias",
+    "nome": "Isaías",
+    "caps": 66,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "jeremias",
+    "nome": "Jeremias",
+    "caps": 52,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "lamentacoes",
+    "nome": "Lamentações",
+    "caps": 5,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "ezequiel",
+    "nome": "Ezequiel",
+    "caps": 48,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "daniel",
+    "nome": "Daniel",
+    "caps": 12,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "oseias",
+    "nome": "Oséias",
+    "caps": 14,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "joel",
+    "nome": "Joel",
+    "caps": 3,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "amos",
+    "nome": "Amós",
+    "caps": 9,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "obadias",
+    "nome": "Obadias",
+    "caps": 1,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "jonas",
+    "nome": "Jonas",
+    "caps": 4,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "miqueias",
+    "nome": "Miquéias",
+    "caps": 7,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "naum",
+    "nome": "Naum",
+    "caps": 3,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "habacuque",
+    "nome": "Habacuque",
+    "caps": 3,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "sofonias",
+    "nome": "Sofonias",
+    "caps": 3,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "ageu",
+    "nome": "Ageu",
+    "caps": 2,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "zacarias",
+    "nome": "Zacarias",
+    "caps": 14,
+    "testamento": "antigo"
+  },
+  {
+    "slug": "malaquias",
+    "nome": "Malaquias",
+    "caps": 4,
+    "testamento": "antigo"
+  },
+  {
     "slug": "mateus",
     "nome": "Mateus",
-    "caps": 28
+    "caps": 28,
+    "testamento": "novo"
   },
   {
     "slug": "marcos",
     "nome": "Marcos",
-    "caps": 16
+    "caps": 16,
+    "testamento": "novo"
   },
   {
     "slug": "lucas",
     "nome": "Lucas",
-    "caps": 24
+    "caps": 24,
+    "testamento": "novo"
   },
   {
     "slug": "joao",
     "nome": "João",
-    "caps": 21
+    "caps": 21,
+    "testamento": "novo"
   },
   {
     "slug": "atos",
     "nome": "Atos dos Apóstolos",
-    "caps": 28
+    "caps": 28,
+    "testamento": "novo"
   },
   {
     "slug": "romanos",
     "nome": "Romanos",
-    "caps": 16
+    "caps": 16,
+    "testamento": "novo"
   },
   {
     "slug": "1corintios",
     "nome": "1ª Coríntios",
-    "caps": 16
+    "caps": 16,
+    "testamento": "novo"
   },
   {
     "slug": "2corintios",
     "nome": "2ª Coríntios",
-    "caps": 13
+    "caps": 13,
+    "testamento": "novo"
   },
   {
     "slug": "galatas",
     "nome": "Gálatas",
-    "caps": 6
+    "caps": 6,
+    "testamento": "novo"
   },
   {
     "slug": "efesios",
     "nome": "Efésios",
-    "caps": 6
+    "caps": 6,
+    "testamento": "novo"
   },
   {
     "slug": "filipenses",
     "nome": "Filipenses",
-    "caps": 4
+    "caps": 4,
+    "testamento": "novo"
   },
   {
     "slug": "colossenses",
     "nome": "Colossenses",
-    "caps": 4
+    "caps": 4,
+    "testamento": "novo"
   },
   {
     "slug": "1tessalonicenses",
     "nome": "1ª Tessalonicenses",
-    "caps": 5
+    "caps": 5,
+    "testamento": "novo"
   },
   {
     "slug": "2tessalonicenses",
     "nome": "2ª Tessalonicenses",
-    "caps": 3
+    "caps": 3,
+    "testamento": "novo"
   },
   {
     "slug": "1timoteo",
     "nome": "1ª Timóteo",
-    "caps": 6
+    "caps": 6,
+    "testamento": "novo"
   },
   {
     "slug": "2timoteo",
     "nome": "2ª Timóteo",
-    "caps": 4
+    "caps": 4,
+    "testamento": "novo"
   },
   {
     "slug": "tito",
     "nome": "Tito",
-    "caps": 3
+    "caps": 3,
+    "testamento": "novo"
   },
   {
     "slug": "filemon",
     "nome": "Filémon",
-    "caps": 1
+    "caps": 1,
+    "testamento": "novo"
   },
   {
     "slug": "hebreus",
     "nome": "Hebreus",
-    "caps": 13
+    "caps": 13,
+    "testamento": "novo"
   },
   {
     "slug": "tiago",
     "nome": "Tiago",
-    "caps": 5
+    "caps": 5,
+    "testamento": "novo"
   },
   {
     "slug": "1pedro",
     "nome": "1ª Pedro",
-    "caps": 5
+    "caps": 5,
+    "testamento": "novo"
   },
   {
     "slug": "2pedro",
     "nome": "2ª Pedro",
-    "caps": 3
+    "caps": 3,
+    "testamento": "novo"
   },
   {
     "slug": "1joao",
     "nome": "1ª João",
-    "caps": 5
+    "caps": 5,
+    "testamento": "novo"
   },
   {
     "slug": "2joao",
     "nome": "2ª João",
-    "caps": 1
+    "caps": 1,
+    "testamento": "novo"
   },
   {
     "slug": "3joao",
     "nome": "3ª João",
-    "caps": 1
+    "caps": 1,
+    "testamento": "novo"
   },
   {
     "slug": "judas",
     "nome": "Judas",
-    "caps": 1
+    "caps": 1,
+    "testamento": "novo"
   },
   {
     "slug": "apocalipse",
     "nome": "Apocalipse",
-    "caps": 22
+    "caps": 22,
+    "testamento": "novo"
   }
 ]

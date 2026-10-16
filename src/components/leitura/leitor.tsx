@@ -26,7 +26,7 @@ export function Leitor({
 
   useEffect(() => {
     try {
-      const salvo = localStorage.getItem('ourdevo:fonte')
+      const salvo = localStorage.getItem('duodevo:fonte')
       if (salvo) setTamanho(Number(salvo))
     } catch {
       // sem localStorage: usa o padrão
@@ -37,7 +37,7 @@ export function Leitor({
     const novo = Math.min(28, Math.max(16, tamanho + delta))
     setTamanho(novo)
     try {
-      localStorage.setItem('ourdevo:fonte', String(novo))
+      localStorage.setItem('duodevo:fonte', String(novo))
     } catch {}
   }
 
@@ -57,12 +57,12 @@ export function Leitor({
           type="button"
           onClick={() => router.back()}
           aria-label="Voltar"
-          className="touch-target text-ink-soft"
+          className="touch-target text-muted"
         >
           ←
         </button>
-        <h1 className="font-serif text-xl">
-          {livroNome} <span className="text-ink-soft">{cap}</span>
+        <h1 className="font-display text-xl">
+          {livroNome} <span className="text-muted">{cap}</span>
         </h1>
         {/* controle de fonte */}
         <div className="flex gap-1">
@@ -70,7 +70,7 @@ export function Leitor({
             type="button"
             onClick={() => trocarTamanho(-2)}
             aria-label="Diminuir letra"
-            className="touch-target rounded-lg px-2 text-sm text-ink-soft"
+            className="touch-target rounded-lg px-2 text-sm text-muted"
           >
             A−
           </button>
@@ -78,7 +78,7 @@ export function Leitor({
             type="button"
             onClick={() => trocarTamanho(2)}
             aria-label="Aumentar letra"
-            className="touch-target rounded-lg px-2 text-base text-ink-soft"
+            className="touch-target rounded-lg px-2 text-base text-muted"
           >
             A+
           </button>
@@ -86,20 +86,20 @@ export function Leitor({
       </header>
 
       {lido ? (
-        <p className="mb-4 rounded-xl bg-sage-100 px-4 py-2 text-center text-sm text-sage-700">
+        <p className="mb-4 rounded-xl bg-accent-soft px-4 py-2 text-center text-sm text-accent-strong">
           ✓ capítulo lido — pode reler com calma
         </p>
       ) : null}
 
       <div
-        className="font-serif leading-relaxed"
+        className="font-display leading-relaxed"
         style={{ fontSize: `${tamanho}px` }}
       >
         {versos.map((texto, i) => (
           <p key={i} className="mb-3 indent-8">
             <span
               aria-hidden
-              className="mr-1 align-super font-sans text-[10px] text-ink-soft/60"
+              className="mr-1 align-super font-sans text-[10px] text-muted/60"
             >
               {i + 1}
             </span>
@@ -108,12 +108,12 @@ export function Leitor({
         ))}
       </div>
 
-      <footer className="sticky bottom-[calc(env(safe-area-inset-bottom)+56px)] mt-8 flex flex-col gap-2 border-t border-line pt-4 bg-paper">
+      <footer className="sticky bottom-[calc(env(safe-area-inset-bottom)+56px)] mt-8 flex flex-col gap-2 border-t border-line pt-4 bg-surface">
         <button
           type="button"
           onClick={terminar}
           disabled={salvando}
-          className="touch-target rounded-full bg-sage-600 px-6 font-medium text-white disabled:opacity-50"
+          className="touch-target rounded-full bg-accent px-6 font-medium text-white disabled:opacity-50"
         >
           {salvando ? 'Salvando…' : lido ? 'Fiquei por aqui' : 'Terminei este capítulo'}
         </button>
@@ -123,7 +123,7 @@ export function Leitor({
             onClick={() =>
               router.push(`/leitura/${proximo.livro}/${proximo.cap}`)
             }
-            className="touch-target rounded-full border border-line px-6 text-ink-soft"
+            className="touch-target rounded-full border border-line px-6 text-muted"
           >
             Continuar lendo → {capituloCurto(proximo)}
           </button>

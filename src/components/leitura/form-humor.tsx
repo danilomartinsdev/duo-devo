@@ -32,7 +32,7 @@ export function FormHumor({ lidoEm }: { lidoEm: string }) {
       <input type="hidden" name="lido_em" value={lidoEm} />
 
       <fieldset>
-        <legend className="mb-2 text-sm text-ink-soft">
+        <legend className="mb-2 text-sm text-muted">
           Como o capítulo te deixou? (opcional)
         </legend>
         <div className="flex flex-wrap justify-center gap-2">
@@ -44,8 +44,8 @@ export function FormHumor({ lidoEm }: { lidoEm: string }) {
               onClick={() => setEmoji(e.emoji)}
               className={`flex h-14 w-14 items-center justify-center rounded-full text-2xl border transition-all ${
                 emoji === e.emoji
-                  ? 'border-sage-600 bg-sage-100 scale-105'
-                  : 'border-line bg-paper'
+                  ? 'border-accent bg-accent-soft scale-105'
+                  : 'border-line bg-surface'
               }`}
             >
               <span aria-hidden>{e.emoji}</span>
@@ -57,12 +57,12 @@ export function FormHumor({ lidoEm }: { lidoEm: string }) {
       </fieldset>
 
       <label className="flex flex-col gap-1.5 text-sm">
-        <span className="text-ink-soft">uma nota curta (opcional)</span>
+        <span className="text-muted">uma nota curta (opcional)</span>
         <textarea
           name="nota"
           rows={3}
           maxLength={280}
-          className="rounded-xl border border-line bg-paper px-4 py-3 text-base outline-none focus:border-sage-400"
+          className="rounded-xl border border-line bg-surface px-4 py-3 text-base outline-none focus:border-accent"
         />
       </label>
 
@@ -73,22 +73,22 @@ export function FormHumor({ lidoEm }: { lidoEm: string }) {
           name="compartilhar"
           checked={compartilhar}
           onChange={(e) => setCompartilhar(e.target.checked)}
-          className="size-5 accent-[var(--color-sage-600)]"
+          className="size-5 accent-[var(--color-accent)]"
         />
       </label>
 
       {state.error ? (
-        <p role="alert" className="text-sm text-clay-600">{state.error}</p>
+        <p role="alert" className="text-sm text-alert">{state.error}</p>
       ) : null}
 
       <button
         type="submit"
         disabled={pending || !emoji}
-        className="touch-target rounded-full bg-sage-600 px-6 font-medium text-white disabled:opacity-40"
+        className="touch-target rounded-full bg-accent px-6 font-medium text-white disabled:opacity-40"
       >
         {pending ? 'Salvando…' : 'Guardar'}
       </button>
-      <Link href="/hoje" className="touch-target rounded-full border border-line px-6 text-center text-ink-soft">
+      <Link href="/hoje" className="touch-target rounded-full border border-line px-6 text-center text-muted">
         Pular — só fechar e ir viver
       </Link>
     </form>

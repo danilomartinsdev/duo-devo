@@ -74,7 +74,7 @@ export async function signUpAction(
 
   // Só quem está na lista de convites cria conta.
   if (!(await isUsuarioInvitado(parsed.data.usuario))) {
-    return { error: 'Este usuário não está na lista de convites do OurDevo.' }
+    return { error: 'Este usuário não está na lista de convites do DuoDevo.' }
   }
 
   const supabase = await createClient()

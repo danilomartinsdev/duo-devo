@@ -1,51 +1,53 @@
 @import "tailwindcss";
 
 /*
- * OurDevo — "Caderno de leitura a dois".
- * Tokens da direção visual: papel quente, tinta, verde-salvia e terracota.
- * Fase 3 adiciona as outras paletas e o modo escuro — por ora, base clara.
+ * DuoDevo — visual de startup: neutro frio (branco/slate), um acento
+ * índigo, tipografia sans forte. Escuro entra na fase 3 com estes
+ * mesmos tokens invertidos.
  */
 @theme {
-  --font-serif: var(--font-fraunces), Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  --color-paper: #faf7f0;
-  --color-paper-soft: #f2ecdf;
-  --color-ink: #33302b;
-  --color-ink-soft: #746b5e;
-  --color-line: #e5dccb;
+  --color-page: #f8fafc;
+  --color-surface: #ffffff;
+  --color-card: #ffffff;
+  --color-ink: #0f172a;
+  --color-muted: #64748b;
+  --color-line: #e2e8f0;
 
-  --color-sage-100: #e3ece0;
-  --color-sage-400: #8fa87f;
-  --color-sage-600: #5d7c55;
-  --color-sage-700: #48623f;
+  --color-accent: #6366f1;
+  --color-accent-strong: #4f46e5;
+  --color-accent-soft: #eef2ff;
 
-  --color-clay-100: #f4e3d8;
-  --color-clay-400: #cf8f6a;
-  --color-clay-500: #bd6f49;
-  --color-clay-600: #a15433;
+  --color-alert: #e11d48;
+  --color-alert-soft: #ffe4e6;
 }
 
 html {
-  /* iOS: evita zoom automático em inputs com fonte < 16px */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
 body {
-  background-color: var(--color-paper);
+  background-color: var(--color-page);
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
+h1, h2 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
 ::selection {
-  background-color: var(--color-clay-100);
-  color: var(--color-clay-600);
+  background-color: var(--color-accent-soft);
+  color: var(--color-accent-strong);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-sage-600);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -61,7 +63,7 @@ body {
   }
 }
 
-/* alvos de toque confortáveis em iOS (44px mínimo) */
+/* alvos de toque confortáveis no iOS (≥44px) */
 .touch-target {
   min-height: 44px;
   min-width: 44px;

@@ -18,7 +18,7 @@ export default async function AppLayout({
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-5 pt-[max(1rem,env(safe-area-inset-top))]">
       <header className="flex items-center justify-between py-4">
-        <span className="font-serif text-xl italic">OurDevo</span>
+        <span className="font-display text-xl font-semibold tracking-tight">DuoDevo</span>
         <LogoutButton nome={perfil.display_name} />
       </header>
       <main className="flex-1 pb-24">

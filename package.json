@@ -1,7 +1,7 @@
 {
   "name": "duo-devo",
   "version": "0.1.0",
-  "description": "OurDevo — devocional a dois: PWA para ler o Novo Testamento em dupla.",
+  "description": "DuoDevo — leiam o Novo Testamento em dupla.",
   "private": true,
   "scripts": {
     "dev": "next dev",
