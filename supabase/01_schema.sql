@@ -1,7 +1,7 @@
 -- OurDevo — schema da fase 1 (setup + auth + RLS)
 -- Rodar como usuário postgres no SQL Editor do Supabase (ou via CLI).
--- Tabelas das fases seguintes (readings, prayers, etc.) entram nos schemas
--- das respectivas fases, com a mesma disciplina de RLS.
+-- Login por USUÁRIO + senha (sem e-mail de verdade por enquanto —
+-- o campo "email" do auth guarda <usuario>@ourdevo.local, ver src/lib/usuarios.ts).
 
 -- ============================================================
 -- Extensões
@@ -12,7 +12,7 @@ create extension if not exists citext;
 -- allowed_users — lista de convites (só vocês dois entram)
 -- ============================================================
 create table public.allowed_users (
-  email citext primary key,
+  usuario citext primary key,
   invited_at timestamptz not null default now()
 );
 
@@ -20,12 +20,12 @@ create table public.allowed_users (
 -- Somente a service_role key (que ignora RLS) acessa.
 alter table public.allowed_users enable row level security;
 
--- >>> EDITE AQUI os e-mails dos dois convidados:
-insert into public.allowed_users (email)
+-- >>> EDITE AQUI os usuários dos dois convidados:
+insert into public.allowed_users (usuario)
 values
-  ('seu-email@exemplo.com'),
-  ('amiga-email@exemplo.com')
-on conflict (email) do nothing;
+  ('seu-usuario'),
+  ('usuario-da-amiga')
+on conflict (usuario) do nothing;
 
 -- ============================================================
 -- profiles — perfil de cada um (nome, foto, tema, fuso)
@@ -124,19 +124,27 @@ security definer
 set search_path = public
 as $$
 declare
+  usuario citext;
   invited boolean;
 begin
-  select exists (select 1 from public.allowed_users where email = new.email)
+  -- O campo "email" guarda <usuario>@ourdevo.local (ver src/lib/usuarios.ts).
+  usuario := split_part(new.email, '@ourdevo.local', 1);
+
+  if usuario is null or usuario = '' then
+    raise exception 'OurDevo: e-mail % não é um usuário válido.', new.email;
+  end if;
+
+  select exists (select 1 from public.allowed_users where allowed_users.usuario = usuario)
     into invited;
 
   if not invited then
-    raise exception 'OurDevo: e-mail % não está na lista de convites.', new.email;
+    raise exception 'OurDevo: usuário % não está na lista de convites.', usuario;
   end if;
 
   insert into public.profiles (id, display_name)
   values (
     new.id,
-    coalesce(nullif(new.raw_user_meta_data ->> 'display_name', ''), split_part(new.email, '@', 1))
+    coalesce(nullif(new.raw_user_meta_data ->> 'display_name', ''), usuario::text)
   );
 
   return new;
@@ -166,8 +174,8 @@ create trigger profiles_set_updated_at
   for each row execute function public.set_updated_at();
 
 -- ============================================================
--- Criar a dupla — rode DEPOIS que os dois confirmarem o cadastro,
--- trocando os e-mails pelos seus. Só uma vez!
+-- Criar a dupla — rode DEPOIS que os dois criarem a conta,
+-- trocando os usuários pelos seus. Só uma vez!
 -- ============================================================
 -- with new_duo as (
 --   insert into public.duos (name) values ('Nossa dupla') returning id
@@ -176,9 +184,8 @@ create trigger profiles_set_updated_at
 -- select new_duo.id, p.id
 -- from new_duo
 -- cross join public.profiles p
--- join public.allowed_users au on true
--- where p.id = (select id from auth.users where email = 'seu-email@exemplo.com')
---    or p.id = (select id from auth.users where email = 'amiga-email@exemplo.com');
+-- where p.id = (select id from auth.users where email = 'seu-usuario@ourdevo.local')
+--    or p.id = (select id from auth.users where email = 'usuario-da-amiga@ourdevo.local');
 
 -- ============================================================
 -- Como testar as políticas (SQL Editor, como postgres):

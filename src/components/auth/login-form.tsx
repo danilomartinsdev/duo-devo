@@ -35,7 +35,7 @@ function FormaEntrar() {
   const [state, action, pending] = useActionState(signInAction, initialState)
   return (
     <form action={action} className="flex flex-col gap-4">
-      <Campo label="E-mail" name="email" type="email" autoComplete="username" />
+      <Campo label="Usuário" name="usuario" type="text" autoComplete="username" />
       <Campo label="Senha" name="password" type="password" autoComplete="current-password" />
       <Mensagens state={state} />
       <Botao pending={pending}>Entrar</Botao>
@@ -48,12 +48,12 @@ function FormaPrimeira() {
   return (
     <form action={action} className="flex flex-col gap-4">
       <Campo label="Como te chamamos" name="name" type="text" autoComplete="name" />
-      <Campo label="E-mail" name="email" type="email" autoComplete="email" />
+      <Campo label="Usuário" name="usuario" type="text" autoComplete="username" />
       <Campo label="Senha" name="password" type="password" autoComplete="new-password" />
       <Mensagens state={state} />
       <Botao pending={pending}>Criar minha conta</Botao>
       <p className="text-center text-xs text-ink-soft">
-        Só o seu e-mail e o da sua amiga criam conta — a lista é nossa.
+        Só os usuários da lista de convites criam conta — a lista é nossa.
       </p>
     </form>
   )

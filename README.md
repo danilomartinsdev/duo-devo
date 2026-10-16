@@ -28,8 +28,14 @@ compartilhado, pedidos de oração e um jardim que só cresce quando as duas lee
 
 ## Criar as contas e a dupla
 
-1. Em `/login`, aba **1º acesso**: cada uma cria a conta (nome + e-mail + senha) e já entra direto.
-2. Com os dois cadastros feitos, rode no SQL Editor o bloco comentado **"Criar a dupla"** no fim de `01_schema.sql` (uma única vez).
+1. No painel do Supabase, rode no SQL Editor a seção `insert into public.allowed_users` (já incluída no `01_schema.sql`) com os **usuários** dos dois.
+2. Em `/login`, aba **1º acesso**: cada uma cria a conta (nome + usuário + senha) e já entra direto.
+3. Com os dois cadastros feitos, rode no SQL Editor o bloco comentado **"Criar a dupla"** no fim de `01_schema.sql` (uma única vez).
+
+> **E-mail?** Não usamos e-mail de verdade por enquanto: o campo "email" do
+> auth guarda `<usuario>@ourdevo.local` (ver `src/lib/usuarios.ts`). Quando
+> quiser ativar e-mail (recuperação de senha etc.), atualize os valores e
+> religue "Confirm email" no painel.
 
 ## Deploy na Vercel
 

@@ -1,12 +1,13 @@
 'use server'
 
 import { z } from 'zod'
-import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { isEmailInvited } from '@/lib/invites'
+import { isUsuarioInvitado } from '@/lib/invites'
 import { rateLimit, clientIpFrom } from '@/lib/rate-limit'
 import { signInSchema, signUpSchema } from '@/lib/validation'
+import { usuarioParaEmail } from '@/lib/usuarios'
+import { headers } from 'next/headers'
 import type { AuthActionState } from '@/lib/action-state'
 
 const erroGenerico =
@@ -17,7 +18,7 @@ export async function signInAction(
   formData: FormData,
 ): Promise<AuthActionState> {
   const parsed = signInSchema.safeParse({
-    email: formData.get('email'),
+    usuario: formData.get('usuario'),
     password: formData.get('password'),
   })
   if (!parsed.success) {
@@ -37,11 +38,11 @@ export async function signInAction(
 
   const supabase = await createClient()
   const { error } = await supabase.auth.signInWithPassword({
-    email: parsed.data.email,
+    email: usuarioParaEmail(parsed.data.usuario),
     password: parsed.data.password,
   })
   if (error) {
-    return { error: 'E-mail ou senha incorretos.' }
+    return { error: 'Usuário ou senha incorretos.' }
   }
 
   redirect('/hoje')
@@ -52,7 +53,7 @@ export async function signUpAction(
   formData: FormData,
 ): Promise<AuthActionState> {
   const parsed = signUpSchema.safeParse({
-    email: formData.get('email'),
+    usuario: formData.get('usuario'),
     password: formData.get('password'),
     name: formData.get('name'),
   })
@@ -71,49 +72,37 @@ export async function signUpAction(
     }
   }
 
-  // Primeiro filtro: só e-mails convidados criam conta.
-  if (!(await isEmailInvited(parsed.data.email))) {
-    return { error: 'Este e-mail não está na lista de convites do OurDevo.' }
+  // Só quem está na lista de convites cria conta.
+  if (!(await isUsuarioInvitado(parsed.data.usuario))) {
+    return { error: 'Este usuário não está na lista de convites do OurDevo.' }
   }
 
   const supabase = await createClient()
   const { data, error } = await supabase.auth.signUp({
-    email: parsed.data.email,
+    email: usuarioParaEmail(parsed.data.usuario),
     password: parsed.data.password,
     options: {
       data: { display_name: parsed.data.name },
-      emailRedirectTo: origin() + '/auth/confirm',
     },
   })
 
   if (error) {
     if (error.message.includes('already registered')) {
-      return { error: 'Já existe uma conta com este e-mail. Use "Entrar".' }
+      return { error: 'Já existe uma conta com este usuário. Use "Entrar".' }
     }
     return { error: erroGenerico }
   }
 
-  // Com "Confirmar e-mail" desligado no Supabase, o cadastro já vem com
-  // sessão: loga direto. Se em algum momento a confirmação voltar a ser
-  // exigida, a template de e-mail usa o gate do /auth/confirm.
   if (data.session) {
+    // "Confirmar e-mail" desligado no Supabase → cadastro já loga direto.
     redirect('/hoje')
   }
 
-  return {
-    message: 'Conta criada! Confira seu e-mail para ativar o acesso.',
-  }
+  return { error: erroGenerico }
 }
 
 export async function signOutAction(): Promise<void> {
   const supabase = await createClient()
   await supabase.auth.signOut()
   redirect('/login')
-}
-
-async function origin(): Promise<string> {
-  const h = await headers()
-  const local = h.get('x-forwarded-host') ?? h.get('host') ?? 'localhost:3000'
-  const proto = h.get('x-forwarded-proto') ?? 'http'
-  return `${proto}://${local}`
 }

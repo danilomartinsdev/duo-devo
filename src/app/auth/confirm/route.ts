@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import type { EmailOtpType } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/server'
-import { isEmailInvited } from '@/lib/invites'
+import { isUsuarioInvitado } from '@/lib/invites'
+import { emailParaUsuario } from '@/lib/usuarios'
 
 /**
  * Confirma o link mágico / e-mail de confirmação (usado pela template
@@ -25,7 +26,8 @@ export async function GET(request: Request) {
   }
 
   const { data } = await supabase.auth.getUser()
-  if (!data.user || !(await isEmailInvited(data.user.email ?? ''))) {
+  const usuario = emailParaUsuario(data.user?.email)
+  if (!data.user || !usuario || !(await isUsuarioInvitado(usuario))) {
     await supabase.auth.signOut()
     return redirectTo(origin, '/login?erro=convite')
   }
