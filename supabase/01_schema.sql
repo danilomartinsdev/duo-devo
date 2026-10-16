@@ -124,27 +124,27 @@ security definer
 set search_path = public
 as $$
 declare
-  usuario citext;
-  invited boolean;
+  v_usuario text;
+  v_invited boolean;
 begin
   -- O campo "email" guarda <usuario>@ourdevo.local (ver src/lib/usuarios.ts).
-  usuario := split_part(new.email, '@ourdevo.local', 1);
+  v_usuario := split_part(new.email, '@ourdevo.local', 1);
 
-  if usuario is null or usuario = '' then
+  if v_usuario is null or v_usuario = '' then
     raise exception 'OurDevo: e-mail % não é um usuário válido.', new.email;
   end if;
 
-  select exists (select 1 from public.allowed_users where allowed_users.usuario = usuario)
-    into invited;
+  select exists (select 1 from public.allowed_users au where au.usuario = v_usuario)
+    into v_invited;
 
-  if not invited then
-    raise exception 'OurDevo: usuário % não está na lista de convites.', usuario;
+  if not v_invited then
+    raise exception 'OurDevo: usuário % não está na lista de convites.', v_usuario;
   end if;
 
   insert into public.profiles (id, display_name)
   values (
     new.id,
-    coalesce(nullif(new.raw_user_meta_data ->> 'display_name', ''), usuario::text)
+    coalesce(nullif(new.raw_user_meta_data ->> 'display_name', ''), v_usuario)
   );
 
   return new;
