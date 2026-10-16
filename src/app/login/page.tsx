@@ -16,7 +16,7 @@ export default async function LoginPage({
         <header className="mb-10 text-center">
           <p className="font-display text-4xl font-bold tracking-tight text-ink">DuoDevo</p>
           <p className="mt-2 text-sm text-muted">
-            Leiam o Novo Testamento em dupla.
+            Plano de leitura e oração em dupla.
           </p>
         </header>
 

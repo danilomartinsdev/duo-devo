@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     default: 'DuoDevo',
     template: '%s · DuoDevo',
   },
-  description: 'Leiam o Novo Testamento em dupla — progresso compartilhado.',
+  description: 'Plano de leitura e oração em dupla.',
 }
 
 export const viewport: Viewport = {
